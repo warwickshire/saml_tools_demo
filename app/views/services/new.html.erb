@@ -1,0 +1,7 @@
+<h1>Service</h1>
+
+<%= form_tag services_path do %>
+  <%= submit_tag "#{action_name == 'new' ? 'Start' : 'Repeat'} authentication" %>
+<% end %>
+
+<%= @output %>
