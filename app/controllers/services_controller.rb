@@ -3,14 +3,14 @@ class ServicesController < ApplicationController
   end
   
   def create
-    saml = SamlTool::ErbBuilder.new(
+    saml = SamlTool::ErbBuilder.build(
       template: saml_request_template,
       settings: request_settings
     )
     
     if params[:just_display_request] != '1'
       
-      encoded_saml = SamlTool::Encoder.encode(saml.to_s)
+      encoded_saml = SamlTool::Encoder.encode(saml)
       
       redirect_uri = SamlTool::Redirect.uri(
         to: request_settings.idp_sso_target_url,
