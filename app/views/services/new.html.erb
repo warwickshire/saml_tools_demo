@@ -6,4 +6,4 @@
   <%= label_tag :just_display_request %>
 <% end %>
 
-<%= content_tag('pre', @saml_request) if @saml_request %>
+<%= content_tag('pre', prettify(@saml_request)) if @saml_request %>

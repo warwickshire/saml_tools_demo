@@ -21,7 +21,7 @@ class ServicesController < ApplicationController
       redirect_to redirect_uri
       
     else
-      @saml_request = prettify saml.to_s
+      @saml_request = saml
       render :new     
     end
   end
@@ -41,24 +41,5 @@ class ServicesController < ApplicationController
       authn_context:                  "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
     )
   end
-  
-  # From http://vitobotta.com/more-methods-format-beautify-ruby-output-console-logs
-  def prettify(xml)
-
-    xsl =<<XSL
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
-  <xsl:strip-space elements="*"/>
-  <xsl:template match="/">
-    <xsl:copy-of select="."/>
-  </xsl:template>
-</xsl:stylesheet>
-XSL
  
-    doc  = Nokogiri::XML(xml)
-    xslt = Nokogiri::XSLT(xsl)
-    out  = xslt.transform(doc)
- 
-    out.to_xml
-  end
 end
