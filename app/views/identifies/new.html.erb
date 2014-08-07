@@ -11,3 +11,14 @@
 
   <%= submit_tag 'Log in' %>
 <% end %>
+
+<h2>Received request</h2>
+<%= content_tag('pre', prettify(@saml)) %>
+
+<h2>Data</h2>
+<dl>
+<% @data.to_hash.each do |key, value|  %>
+  <dt><%= key %></dt>
+  <dd><%= value %></dd>
+<% end %>
+</dl>

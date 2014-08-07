@@ -8,22 +8,16 @@ class ServicesController < ApplicationController
       settings: request_settings
     )
     
-    if params[:just_display_request] != '1'
-      
-      encoded_saml = SamlTool::Encoder.encode(saml)
-      
-      redirect_uri = SamlTool::Redirect.uri(
-        to: request_settings.idp_sso_target_url,
-        data: {
-          'SAMLRequest' => encoded_saml
-        }
-      )
-      redirect_to redirect_uri
-      
-    else
-      @saml_request = saml
-      render :new     
-    end
+    encoded_saml = SamlTool::Encoder.encode(saml)
+
+    redirect_uri = SamlTool::Redirect.uri(
+      to: request_settings.idp_sso_target_url,
+      data: {
+        'SAMLRequest' => encoded_saml
+      }
+    )
+    redirect_to redirect_uri  
+
   end
   
   def saml_request_template

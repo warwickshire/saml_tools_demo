@@ -2,8 +2,4 @@
 
 <%= form_tag services_path do %>
   <%= submit_tag "#{action_name == 'new' ? 'Create' : 'Recreate'} authentication request" %>
-  <%= check_box_tag :just_display_request, 1, params[:just_display_request]  %>
-  <%= label_tag :just_display_request %>
 <% end %>
-
-<%= content_tag('pre', prettify(@saml_request)) if @saml_request %>
