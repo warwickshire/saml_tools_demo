@@ -4,6 +4,7 @@ PATH
     saml_tools (0.0.1)
       hashie
       nokogiri
+      xmldsig
 
 GEM
   remote: https://rubygems.org/
@@ -114,6 +115,8 @@ GEM
     uglifier (2.5.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    xmldsig (0.2.4)
+      nokogiri
 
 PLATFORMS
   ruby

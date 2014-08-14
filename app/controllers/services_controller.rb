@@ -20,6 +20,7 @@ class ServicesController < ApplicationController
 
   end
   
+  private
   def saml_request_template
     File.read File.expand_path('services/request.saml.erb', view_paths.first)
   end

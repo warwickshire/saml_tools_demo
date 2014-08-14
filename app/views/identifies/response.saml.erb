@@ -1,0 +1,55 @@
+<samlp:Response xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="GOSAMLR12901174571794" Version="2.0" IssueInstant="<%= settings.issue_instance %>" Destination="{recipient}">
+  <samlp:Status>
+    <samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/></samlp:Status>
+  <saml:Assertion xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.0" ID="<%= settings.uuid %>" IssueInstant="<%= settings.issue_instance %>">
+    <saml:Issuer><%= settings.issuer %></saml:Issuer>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+     <SignedInfo>
+      <CanonicalizationMethod Algorithm=
+       "http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+      <SignatureMethod Algorithm=
+       "http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+      <Reference URI="#<%= settings.uuid %>">
+       <Transforms>
+        <Transform Algorithm=
+         "http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+       </Transforms>
+       <DigestMethod Algorithm=
+         "http://www.w3.org/2000/09/xmldsig#sha1"/>
+       <DigestValue></DigestValue>
+      </Reference>
+     </SignedInfo>
+     <SignatureValue />
+     <KeyInfo>
+      <X509Data >
+       <X509SubjectName/>
+       <X509IssuerSerial/>
+       <X509Certificate/>
+      </X509Data>
+      <KeyValue />
+     </KeyInfo>
+    </Signature>
+    <saml:Subject>
+      <saml:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"><%= settings.name_id %></saml:NameID>
+      <saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+        <saml:SubjectConfirmationData NotOnOrAfter="<%= settings.not_on_or_after %>" Recipient="{recipient}"/></saml:SubjectConfirmation>
+    </saml:Subject>
+    <saml:Conditions NotBefore="<%= settings.issue_instance %>" NotOnOrAfter="<%= settings.not_on_or_after  %>">
+      <saml:AudienceRestriction>
+        <saml:Audience>{audience}</saml:Audience>
+      </saml:AudienceRestriction>
+    </saml:Conditions>
+    <saml:AuthnStatement AuthnInstant="<%= settings.request.issue_instant %>" SessionNotOnOrAfter="<%= settings.not_on_or_after %>" SessionIndex="<%= settings.request.id %>">
+      <saml:AuthnContext>
+        <saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:Password</saml:AuthnContextClassRef>
+      </saml:AuthnContext>
+    </saml:AuthnStatement>
+    <saml:AttributeStatement>
+<% settings.attributes.each do |key, value| %>
+      <saml:Attribute Name="<%= key %>">
+        <saml:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string"><%= value %></saml:AttributeValue>
+      </saml:Attribute>
+<% end %>
+    </saml:AttributeStatement>
+  </saml:Assertion>
+</samlp:Response>
