@@ -22,11 +22,19 @@
      <SignatureValue />
      <KeyInfo>
       <X509Data >
-       <X509SubjectName/>
-       <X509IssuerSerial/>
-       <X509Certificate/>
+       <X509SubjectName><%= settings.certificate.subject_name %></X509SubjectName>
+       <X509IssuerSerial>
+         <X509IssuerName><%= settings.certificate.issuer_name %></X509IssuerName>
+         <X509SerialNumber><%= settings.certificate.serial_number %></X509SerialNumber>
+       </X509IssuerSerial>
+       <X509Certificate><%= settings.certificate.x509_certificate %></X509Certificate>
       </X509Data>
-      <KeyValue />
+      <KeyValue>
+       <RSAKeyValue>
+       <Modulus><%= settings.rsa_key.modulus %></Modulus>
+       <Exponent><%= settings.rsa_key.exponent %></Exponent>
+       </RSAKeyValue>
+       </KeyValue>
      </KeyInfo>
     </Signature>
     <saml:Subject>

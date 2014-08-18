@@ -13,7 +13,10 @@ class IdentifiesController < ApplicationController
       settings: response_settings
     )
     unsigned_assertion = Xmldsig::SignedDocument.new(saml)
-    signed_assertion = unsigned_assertion.sign(private_key)
+    signed_assertion = unsigned_assertion.sign(open_ssl_rsa_key)
+
+    response_saml = SamlTool::ResponseReader.new(signed_assertion)
+    puts "Response valid? #{response_saml.valid?}"
     render xml: signed_assertion
   end
   
@@ -28,21 +31,39 @@ class IdentifiesController < ApplicationController
       name_id: params['email'],
       not_on_or_after: 10.minutes.from_now.utc.iso8601,
       request: @saml_request,
+      certificate: certificate,
+      rsa_key: rsa_key,
       attributes: {
         email: params['email']
       }
     )
   end
 
-  def private_key
-    @private_key ||= OpenSSL::PKey::RSA.new(pem_file, 'hello')
+  def certificate
+    @certificate ||= SamlTool::Certificate.new(x509_certificate)
   end
 
-  def pem_file
-    File.read pem_file_path
+  def rsa_key
+    @rsa_key ||= SamlTool::RsaKey.new(open_ssl_rsa_key)
   end
 
-  def pem_file_path
-    File.expand_path 'example_files/userkey.pem', Rails.root
+
+  def x509_certificate
+    @x509_certificate ||= OpenSSL::PKCS12.new(
+      contents_of('example_files/usercert.p12'),
+      'hello'
+    ).certificate
   end
+
+  def open_ssl_rsa_key
+    @open_ssl_rsa_key ||= OpenSSL::PKey::RSA.new(
+      contents_of('example_files/userkey.pem'),
+      'hello'
+    )
+  end
+
+  def contents_of(file_path)
+    File.read File.expand_path(file_path, Rails.root)
+  end
+
 end
