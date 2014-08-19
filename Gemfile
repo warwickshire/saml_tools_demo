@@ -21,5 +21,5 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
-gem 'saml_tools', path: File.expand_path('../saml_tools', File.dirname(__FILE__))
+gem 'saml_tools'
 
