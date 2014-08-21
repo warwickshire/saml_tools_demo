@@ -1,0 +1,12 @@
+<% if @response_valid %>
+<h1>Hurrah!!!</h1>
+<p>You have successfully authenticated as <%= @saml.name_id %></p>
+<% else %>
+<h1>Whoops</h1>
+<p>Something went wrong</p>
+<% end %>
+
+<p><%= link_to 'Try again', root_path %>
+
+<h2>Received response</h2>
+<%= content_tag('pre', prettify(@request_data)) %>

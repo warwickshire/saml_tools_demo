@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  </head>
+  <body onload="document.forms[0].submit();" style="visibility:hidden;">
+    <%= form_tag(@target, method: :put) do %>
+      <%= hidden_field_tag("SAMLResponse", @saml_response) %>
+      <%= hidden_field_tag("RelayState", params[:RelayState]) %>
+      <%= submit_tag "Submit" %>
+    <% end %>
+  </body>
+</html>
+<%#
+# inspired by
+# https://github.com/sportngin/saml_idp/blob/eacdf44561eb98113930cd9f39bbfe09c32d4174/app/views/saml_idp/idp/saml_post.html.erb
+%>

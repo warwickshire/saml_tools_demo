@@ -5,9 +5,12 @@ class IdentifiesController < ApplicationController
     @data = SamlRequestReader.new(@saml)
   end
   
+  #TODO Need to add handling of RelayState
   def create
     request_data = SamlTool::Decoder.decode(session['SAMLRequest'])
     @saml_request = SamlRequestReader.new(request_data)
+    @target = @saml_request.assertion_consumer_service_url
+    Rails.logger.warn "Target is #{Rails.logger.info}"
     saml = SamlTool::ErbBuilder.build(
       template: saml_response_template,
       settings: response_settings
@@ -16,8 +19,9 @@ class IdentifiesController < ApplicationController
     signed_assertion = unsigned_assertion.sign(open_ssl_rsa_key)
 
     response_saml = SamlTool::ResponseReader.new(signed_assertion)
-    puts "Response valid? #{response_saml.valid?}"
-    render xml: signed_assertion
+    Rails.logger.info "Response valid? #{response_saml.valid?}"
+    
+    @saml_response = SamlTool::Encoder.encode(signed_assertion)
   end
   
   private
