@@ -1,5 +1,7 @@
-<h1>Service</h1>
+<h1>Service Provider</h1>
+
+<p>Use the button below to send an authentication request to the Identity Provider</p>
 
 <%= form_tag services_path do %>
-  <%= submit_tag "#{action_name == 'new' ? 'Create' : 'Recreate'} authentication request" %>
+  <%= submit_tag "Send request" %>
 <% end %>

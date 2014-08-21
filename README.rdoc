@@ -1,28 +1,23 @@
-== README
+= Saml Tool Demo
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application is a simulation of two servers in a SAML ecosphere:
 
-Things you may want to cover:
+== Service Provider
 
-* Ruby version
+This role is taken by the Services Controller. It has a user (the person
+accessing the pages it presents), that it needs to authenticate. To do
+so, it must send the user to the Identity Provider with a SAML request:
 
-* System dependencies
+== Identity Provider
 
-* Configuration
+This role is taken by the Identities Controller. It identify the user and
+sends them back to the Service Provider with a response token in the form
+of a SAML Response.
 
-* Database creation
+== SamlTools
 
-* Database initialization
+https://github.com/warwickshire/saml_tools
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+These tools are used to package up many of the processes needed to achieve the
+tasks carried out by the Services and Identities controllers. In particular,
+The creation, reading, manipulation and transfer of SAML documents.
