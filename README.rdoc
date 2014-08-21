@@ -10,7 +10,7 @@ so, it must send the user to the Identity Provider with a SAML request:
 
 == Identity Provider
 
-This role is taken by the Identities Controller. It identify the user and
+This role is taken by the Identities Controller. It identifies the user and
 sends them back to the Service Provider with a response token in the form
 of a SAML Response.
 
@@ -21,3 +21,8 @@ https://github.com/warwickshire/saml_tools
 These tools are used to package up many of the processes needed to achieve the
 tasks carried out by the Services and Identities controllers. In particular,
 The creation, reading, manipulation and transfer of SAML documents.
+
+== Important
+
+Please note, this demo is used as a platform to experiment with Saml Tools. 
+It should not be used as a template for how to build a production SAML server.
